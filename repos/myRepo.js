@@ -47,6 +47,71 @@ let myRepo = {
                 resolve(people);
             }
         })
+    },
+    insert: function (newData, resolve, reject) {
+        fs.readFile(FILE_NAME, function (err, data) {
+            if (err){
+                reject(err)
+            }
+            else {
+                let people = JSON.parse(data);
+                people.push(newData);
+                fs.writeFile(FILE_NAME, JSON.stringify(people), function (err) {
+                    if (err){
+                        reject(err);
+                    }
+                    else {
+                        resolve(newData);
+                    }
+                });
+            }
+        })
+    },
+    update: function (newData, id, resolve, reject) {
+        fs.readFile(FILE_NAME, function (err, data) {
+            if (err) {
+                reject(err);
+            }
+            else {
+                let people = JSON.parse(data);
+                let person = people.find(p => p.id == id);
+                if (person) {
+                    Object.assign(person, newData);
+                    fs.writeFile(FILE_NAME, JSON.stringify(people), function (err) {
+                        if (err) {
+                            reject(err);
+                        }
+                        else {
+                            resolve(newData);
+                        }
+                    })
+                }
+            }
+        });
+    },
+
+
+    delete: function (id, resolve, reject) {
+        fs.readFile(FILE_NAME, function (err, data) {
+            if (err) {
+                reject(err)
+            }
+            else {
+                let people = JSON.parse(data);
+                let index = people.findIndex(p => p.id == id);
+                if (index != -1) {
+                    people.splice(index, 1);
+                    fs.writeFile(FILE_NAME, JSON.stringify(people), function(err) {
+                        if (err) {
+                            reject(err);
+                        }
+                        else {
+                            resolve(index);
+                        }
+                    })
+                }
+            }
+        });
     }
 };
 
