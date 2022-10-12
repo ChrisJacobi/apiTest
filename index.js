@@ -2,12 +2,15 @@
 let express = require('express');
 let app = express();
 let myRepo = require('./repos/myRepo');
-
+let cors = require('cors');
 // Use the express router object
 let router = express.Router();
 
 // Configure middleware to support JSON data parsing in request object
 app.use(express.json());
+
+// Configure CORS
+app.use(cors());
 
 // Create GET to return data
 router.get('/', function(req, res, next){

@@ -1,5 +1,5 @@
 
-let fs = require('fs');
+let fs = require('fs'); // FILE SYSTEM FROM EXPRESS
 const { resolve } = require('path');
 
 const FILE_NAME = './assets/test.json';
